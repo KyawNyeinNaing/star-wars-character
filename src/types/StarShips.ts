@@ -1,4 +1,4 @@
-export interface StarShips {
+export interface ResultStarShips {
   name: string;
   model: string;
   manufacturer: string;
@@ -17,4 +17,11 @@ export interface StarShips {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface StarShips {
+  count: number;
+  next: string;
+  previous: string;
+  results: ResultStarShips[];
 }

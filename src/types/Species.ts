@@ -1,4 +1,4 @@
-export interface Species {
+export interface ResultSpecies {
   name: string;
   classification: string;
   designation: string;
@@ -14,4 +14,11 @@ export interface Species {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface Species {
+  count: number;
+  next: string;
+  previous: string;
+  results: ResultSpecies[];
 }

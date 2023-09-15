@@ -1,4 +1,4 @@
-export interface Vehicle {
+export interface ResultVehicle {
   name: string;
   model: string;
   manufacturer: string;
@@ -15,4 +15,11 @@ export interface Vehicle {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface Vehicle {
+  count: number;
+  next: string;
+  previous: string;
+  results: ResultVehicle[];
 }

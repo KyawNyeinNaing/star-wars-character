@@ -1,4 +1,4 @@
-export interface Film {
+export interface ResultFilm {
   title: string;
   episode_id: number;
   opening_crawl: string;
@@ -13,4 +13,11 @@ export interface Film {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface Film {
+  count: number;
+  next: string;
+  previous: string;
+  results: ResultFilm[];
 }

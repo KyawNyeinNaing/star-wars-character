@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ people }: Props) => {
-  // console.log('=> ', people);
   return <div>Home</div>;
 };
 
