@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ['lumiere-a.akamaihd.net'],
   },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 module.exports = nextConfig;
