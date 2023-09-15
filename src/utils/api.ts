@@ -1,23 +1,20 @@
 import dayjs from 'dayjs';
 
-import { ApiResponse } from '@/types/';
+import { ApiResponse, People } from '@/types';
 
 interface ParameterType {
   [key: string]: string | string[];
 }
 
 export class FetchAPI {
-  constructor() {}
-
-  async sendApiRequest(
-    path: string,
-    parameters: ParameterType,
-    apiDomain: string,
-    method: string = 'GET'
-  ): Promise<ApiResponse> {
+  apiDomain: string = 'swapi.dev'; // process.env.API_DOMAIN
+  apiUrl: string;
+  constructor() {
+    this.apiUrl = `https://${this.apiDomain}/api`;
+  }
+  async sendApiRequest(api: string, parameters: ParameterType, method: string = 'GET'): Promise<ApiResponse> {
     const queryString = new URLSearchParams(parameters as any);
-
-    return await fetch(`${apiDomain}/${path}?${queryString.toString()}`, {
+    return await fetch(`${this.apiUrl}/${api}?${queryString.toString()}`, {
       method,
       next: {
         revalidate: 3600,
@@ -25,14 +22,18 @@ export class FetchAPI {
     })
       .then(async (res: Response) => {
         const result = await res.json();
+
         return {
           ...result,
-          lastUpdated: dayjs().format('ddd, DD MMM YYYY HH:mm:ss [GMT]'),
         };
       })
       .catch((error: Error) => {
         console.log('ERROR ==>', JSON.stringify(error));
         throw new Error(error?.message);
       });
+  }
+
+  async getPeoples(path: string, params: ParameterType = {}): Promise<People> {
+    return await this.sendApiRequest(path, params);
   }
 }

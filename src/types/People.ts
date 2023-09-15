@@ -1,4 +1,4 @@
-export interface People {
+export interface PeopleResult {
   name: string;
   height: string;
   mass: string;
@@ -15,4 +15,11 @@ export interface People {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface People {
+  count: number;
+  next: string;
+  previous: string;
+  results: PeopleResult[];
 }
