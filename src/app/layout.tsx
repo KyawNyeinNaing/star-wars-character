@@ -1,4 +1,7 @@
 import '@/styles/globals.css';
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { fontSans } from '@/configs/fonts';
@@ -17,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <head />
         <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
+            <Theme>{children}</Theme>
           </ThemeProvider>
         </body>
       </html>

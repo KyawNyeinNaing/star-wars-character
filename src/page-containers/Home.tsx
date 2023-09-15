@@ -1,7 +1,8 @@
 'use client';
-import { Card, CardContent } from '@/components/Card';
+import { Card } from '@/components/Card';
 import { Image } from '@/components/Image';
 import { PeopleResult } from '@/types';
+import { Box, Container, Grid } from '@radix-ui/themes';
 import { useTheme } from 'next-themes';
 import React from 'react';
 
@@ -12,11 +13,9 @@ interface Props {
 const Home: React.FC<Props> = ({ people }: Props) => {
   const { theme } = useTheme();
 
-  console.log(theme);
-
   return (
     <div>
-      {/* <Image
+      <Image
         src="https://lumiere-a.akamaihd.net/v1/images/ahsoka-tentpole-desktop_87875115.jpeg?region=0,0,1600,600"
         width={1600}
         height={600}
@@ -27,27 +26,18 @@ const Home: React.FC<Props> = ({ people }: Props) => {
         width={1600}
         height={175}
         alt="test"
-      /> */}
-      <Card>
-        <CardContent className="p-2">
-          <div className="flex items-center">
-            <p className="text-sm text-muted-foreground">Username :</p>
-            &nbsp;
-          </div>
-          <div className="flex items-center">
-            <p className="text-sm text-muted-foreground">Bio :</p>
-            &nbsp;
-          </div>
-          <div className="flex items-center">
-            <p className="text-sm text-muted-foreground">Source ID :</p>
-            &nbsp;
-          </div>
-          <div className="flex items-center">
-            <p className="text-sm text-muted-foreground">ID :</p>
-            &nbsp;
-          </div>
-        </CardContent>
-      </Card>
+      />
+      <div className="bg-[#1b2731]">
+        <Container size="4">
+          <Grid columns="4" gap="6">
+            {people?.map((each, key) => (
+              <Box key={key}>
+                <Card data={each} />
+              </Box>
+            ))}
+          </Grid>
+        </Container>
+      </div>
     </div>
   );
 };
