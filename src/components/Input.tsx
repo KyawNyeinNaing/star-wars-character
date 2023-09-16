@@ -10,16 +10,18 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 interface Props extends InputProps {
   inputClasses?: string;
   rootClasses?: string;
+  onChange?: (arg?: any) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ className, inputClasses, rootClasses, type }, ref) => {
+  ({ onChange, inputClasses, rootClasses, type }, ref) => {
     return (
       <TextField.Root className={rootClasses}>
         <TextField.Input
           className={cn('outline-none', inputClasses)}
           placeholder="Search with name..."
           size="3"
+          onChange={onChange}
           type={type}
           ref={ref}
         />

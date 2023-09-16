@@ -1,9 +1,31 @@
+'use client';
 import { Container, Grid } from '@radix-ui/themes';
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Image, Icons } from '../Image';
 import { Input } from '../Input';
+import { useAtom } from 'jotai';
+import { searchAtom } from '@/shared/atom';
+import { useRouter } from 'next/navigation';
+import { debounce } from 'lodash';
 
 const Header: React.FC = () => {
+  const [search, setSearch] = useState<string>('');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!search) {
+      router.push('/');
+    } else {
+      router.push(`/?search=${search}`);
+    }
+  }, [search, router]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const debouncedOnChange = debounce(handleChange, 500);
+
   return (
     <Container size="4">
       <Grid columns="1">
@@ -17,8 +39,7 @@ const Header: React.FC = () => {
             />
           </div>
           <div className="flex items-center justify-start border-none rounded-[5px] h-[40px] outline-none text-white text-[16px] relative">
-            {/* <input className="h-full outline-none pl-[16px]" type="text" /> */}
-            <Input />
+            <Input onChange={event => debouncedOnChange(event)} />
           </div>
         </div>
       </Grid>

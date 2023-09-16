@@ -15,7 +15,6 @@ interface Props {
 
 export const Card = React.forwardRef<HTMLDivElement, Props>(
   ({ data, urlId = 0, className }: Props, ref) => {
-    console.log(urlId);
     return (
       <CardWrap ref={ref} className={cn('w-auto rounded-sm overflow-hidden', className)}>
         <Image

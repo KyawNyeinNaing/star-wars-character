@@ -1,8 +1,10 @@
 'use client';
 import { Card } from '@/components/Card';
 import { Image } from '@/components/Image';
+import { searchAtom } from '@/shared/atom';
 import { PeopleResult } from '@/types';
 import { Box, Container, Grid } from '@radix-ui/themes';
+import { useAtom } from 'jotai';
 import { useTheme } from 'next-themes';
 import React from 'react';
 
@@ -12,6 +14,8 @@ interface Props {
 
 const Home: React.FC<Props> = ({ people }: Props) => {
   const { theme } = useTheme();
+
+  console.log('people => ', people);
 
   return (
     <div>

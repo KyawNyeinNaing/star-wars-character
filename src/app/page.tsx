@@ -1,12 +1,13 @@
 import Home from '@/page-containers/Home';
 import { People } from '@/types';
-import { FetchAPI } from '@/utils/api';
-import Image from 'next/image';
+import { FetchAPI, ParameterType } from '@/utils/api';
 
-const HomePage = async () => {
+const HomePage = async ({ searchParams }: { searchParams: ParameterType }) => {
+  const search = typeof searchParams.search === 'string' ? searchParams.search : '';
   const fetchApi = new FetchAPI();
   const people = (await fetchApi.getPeoples('people', {
     page: '1',
+    search,
   })) as People;
 
   return <Home people={people.results} />;
