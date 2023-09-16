@@ -8,6 +8,7 @@ import { fontSans } from '@/configs/fonts';
 import { ThemeProvider } from '@/providers/theme';
 import { ServerThemeProvider } from '@wits/next-themes';
 import Header from '@/components/Layout/Header';
+import { JotaiProvider } from '@/providers/jotai';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,12 +21,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en" className={fontSans.className}>
         <head />
         <body>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Theme>
-              <Header />
-              {children}
-            </Theme>
-          </ThemeProvider>
+          <JotaiProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Theme>
+                <Header />
+                {children}
+              </Theme>
+            </ThemeProvider>
+          </JotaiProvider>
         </body>
       </html>
     </ServerThemeProvider>

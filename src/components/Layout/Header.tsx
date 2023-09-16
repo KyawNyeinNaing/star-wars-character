@@ -1,30 +1,47 @@
 'use client';
 import { Container, Grid } from '@radix-ui/themes';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { Image, Icons } from '../Image';
 import { Input } from '../Input';
 import { useAtom } from 'jotai';
 import { searchAtom } from '@/shared/atom';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { debounce } from 'lodash';
+import { Autocomplete, Item } from '../Autocomplete';
+import { matchSorter } from 'match-sorter';
+import useItemList from '@/hooks/useAtomReducer';
+import { TYPES } from '@/utils/enum';
+import { PeopleResult } from '@/types';
 
 const Header: React.FC = () => {
-  const [search, setSearch] = useState<string>('');
+  // const [search, setSearch] = useState<string | null>('');
+  const [searchValue, setSearchValue] = useState<string>('');
   const router = useRouter();
+  // const { get } = useSearchParams();
+  // const getParam = get('search');
+  const comboboxRef = useRef<any>(null);
+  const { items } = useItemList(TYPES.CHARACTER_LIST);
+
+  // useEffect(() => {
+  //   if (getParam) {
+  //     setSearchValue();
+  //   }
+  // }, [getParam]);
+
 
   useEffect(() => {
-    if (!search) {
+    if (!searchValue) {
       router.push('/');
     } else {
-      router.push(`/?search=${search}`);
+      router.push(`/?search=${searchValue}`);
     }
-  }, [search, router]);
+  }, [searchValue, router]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
+  const debouncedOnChange = debounce(() => {
+    setSearchValue(comboboxRef?.current?.value);
+  }, 500);
 
-  const debouncedOnChange = debounce(handleChange, 500);
+  const matches = useMemo(() => items && matchSorter(items?.peopleList as PeopleResult[], searchValue), [searchValue, items]);
 
   return (
     <Container size="4">
@@ -39,7 +56,19 @@ const Header: React.FC = () => {
             />
           </div>
           <div className="flex items-center justify-start border-none rounded-[5px] h-[40px] outline-none text-white text-[16px] relative">
-            <Input onChange={event => debouncedOnChange(event)} />
+            <Autocomplete ref={comboboxRef} setValue={setSearchValue} onChange={debouncedOnChange}>
+              {matches?.map((each, key) => (
+                <Item key={key} className="combobox-item" value={each?.name}>
+                  {each?.name}
+                </Item>
+              ))}
+            </Autocomplete>
+            {/* <Autocomplete>
+              <Item>Hello</Item>
+              <Item>Hello</Item>
+              <Item>Hello</Item>
+            </Autocomplete> */}
+            {/* <Input search={search} onChange={event => debouncedOnChange(event)} /> */}
           </div>
         </div>
       </Grid>
