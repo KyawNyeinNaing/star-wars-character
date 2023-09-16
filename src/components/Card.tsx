@@ -5,30 +5,37 @@ import { Image } from './Image';
 import { PeopleResult } from '@/types';
 import { Text } from './Text';
 import styled from 'styled-components';
+import { getUrlId } from '@/utils/inde';
 
 interface Props {
   data: PeopleResult;
   className?: string;
+  urlId?: number;
 }
 
-export const Card = React.forwardRef<HTMLDivElement, Props>(({ data, className }: Props, ref) => (
-  <CardWrap ref={ref} className={cn('w-auto', className)}>
-    <Image
-      src="https://starwars-visualguide.com/assets/img/characters/4.jpg"
-      width={400}
-      height={550}
-      alt="test"
-    />
-    <div className="px-[20px] py-[35px] relative bg-[#1a1a1a]">
-      <CardDecalRight className="absolute right-[20px] top-0 w-[12px] h-[8px]" />
-      <CardDecalLeft className="absolute top-[20px] w-[24px] z-10 left" />
-      <Text as="p" size="6">
-        Hello World
-      </Text>
-    </div>
-    <CardFooter className="bg-initial h-[7px] relative -m-[1px]" />
-  </CardWrap>
-));
+export const Card = React.forwardRef<HTMLDivElement, Props>(
+  ({ data, urlId = 0, className }: Props, ref) => {
+    console.log(urlId);
+    return (
+      <CardWrap ref={ref} className={cn('w-auto rounded-sm overflow-hidden', className)}>
+        <Image
+          src={`https://starwars-visualguide.com/assets/img/characters/${urlId + 1}.jpg`}
+          width={400}
+          height={550}
+          alt="test"
+        />
+        <div className="px-[20px] py-[35px] relative bg-[#1a1a1a]">
+          <CardDecalRight className="absolute right-[20px] top-0 w-[12px] h-[8px]" />
+          <CardDecalLeft className="absolute top-[20px] w-[24px] z-10 left" />
+          <Text as="p" size="6">
+            {data?.name}
+          </Text>
+        </div>
+        <CardFooter className="bg-initial h-[7px] relative -m-[1px]" />
+      </CardWrap>
+    );
+  }
+);
 
 Card.displayName = 'Card';
 

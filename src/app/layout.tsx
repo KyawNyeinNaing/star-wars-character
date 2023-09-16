@@ -7,6 +7,7 @@ import { Inter } from 'next/font/google';
 import { fontSans } from '@/configs/fonts';
 import { ThemeProvider } from '@/providers/theme';
 import { ServerThemeProvider } from '@wits/next-themes';
+import Header from '@/components/Layout/Header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <head />
         <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Theme>{children}</Theme>
+            <Theme>
+              <Header />
+              {children}
+            </Theme>
           </ThemeProvider>
         </body>
       </html>

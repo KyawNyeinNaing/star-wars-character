@@ -1,5 +1,6 @@
 import { IconType } from '@/utils/enum';
 import NextImage from 'next/image';
+import { RxMagnifyingGlass } from 'react-icons/rx';
 
 export const Icons = {
   star: ({ type, ...props }: { type: IconType }) => {
@@ -37,6 +38,7 @@ export const Icons = {
       </svg>;
     }
   },
+  search: RxMagnifyingGlass,
 };
 
 interface Image {
@@ -44,8 +46,18 @@ interface Image {
   width: number;
   height: number;
   alt: string;
+  className?: string;
 }
 
-export const Image: React.FC<Image> = ({ src, width, height, alt, ...props }: Image) => {
-  return <NextImage src={src} width={width || 0} height={height || 0} alt={alt} {...props} />;
+export const Image: React.FC<Image> = ({ src, width, className, height, alt, ...props }: Image) => {
+  return (
+    <NextImage
+      className={className}
+      src={src}
+      width={width || 0}
+      height={height || 0}
+      alt={alt}
+      {...props}
+    />
+  );
 };
