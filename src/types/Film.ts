@@ -15,6 +15,11 @@ export interface ResultFilm {
   url: string;
 }
 
+export interface RelativeFilm {
+  title: string;
+  url: string;
+}
+
 export interface Film {
   count: number;
   next: string;

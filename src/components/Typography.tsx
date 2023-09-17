@@ -5,8 +5,9 @@ import { Text as RText } from '@radix-ui/themes';
 interface Props {
   children: React.ReactNode;
   className?: string;
-  as?: 'span' | 'p';
+  as?: 'p' | 'div' | 'span';
   size?: string;
+  weight?: string;
 }
 
 export const Text = React.forwardRef<HTMLDivElement, Props>(

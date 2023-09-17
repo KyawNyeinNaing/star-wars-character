@@ -15,6 +15,13 @@ export interface PlanetResult {
   url: string;
 }
 
+export interface RelativeHomeWorld {
+  name: string;
+  terrain: string;
+  climate: string;
+  residents: string[];
+}
+
 export interface Planet {
   count: number;
   next: string;

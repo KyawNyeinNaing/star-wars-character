@@ -1,5 +1,5 @@
 import Home from '@/page-containers/Home';
-import { People } from '@/types';
+import { Film, People } from '@/types';
 import { FetchAPI, ParameterType } from '@/utils/api';
 
 const HomePage = async ({ searchParams }: { searchParams: ParameterType }) => {

@@ -44,7 +44,6 @@ const Modal = React.forwardRef<
   HTMLDivElement,
   { className?: string; trigger: any; children: React.ReactNode }
 >(({ className, trigger, children }, ref) => {
-  // const dialog = Ariakit.useDialogStore({ animated: true });
   return (
     <>
       <Ariakit.Dialog

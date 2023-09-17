@@ -3,9 +3,8 @@ import * as React from 'react';
 import { cn } from '@/utils/cn';
 import { Image } from './Image';
 import { PeopleResult } from '@/types';
-import { Text } from './Text';
+import { Text } from './Typography';
 import styled from 'styled-components';
-import { getUrlId } from '@/utils/inde';
 
 interface Props {
   data: PeopleResult;

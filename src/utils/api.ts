@@ -1,6 +1,18 @@
 import dayjs from 'dayjs';
 
-import { ApiResponse, Film, People, Planet, Species, StarShips, Vehicle } from '@/types';
+import {
+  ApiResponse,
+  Film,
+  People,
+  PeopleResult,
+  Planet,
+  RelativeFilm,
+  RelativeHomeWorld,
+  ResultFilm,
+  Species,
+  StarShips,
+  Vehicle,
+} from '@/types';
 
 export interface ParameterType {
   search?: string | string[] | undefined;
@@ -19,7 +31,7 @@ export class FetchAPI {
     api: string,
     parameters: ParameterType,
     method: string = 'GET'
-  ): Promise<ApiResponse> {
+  ): Promise<ApiResponse & RelativeFilm & RelativeHomeWorld> {
     const queryString = new URLSearchParams(parameters as any);
     return await fetch(`${this.baseUrl}/${api}?${queryString.toString()}`, {
       method,
@@ -45,12 +57,49 @@ export class FetchAPI {
     return await this.sendApiRequest(path, params);
   }
 
+  async getRelativeHomeworld(
+    path: string,
+    homeworld: any,
+    params: ParameterType
+  ): Promise<RelativeHomeWorld> {
+    const match = homeworld.match(/\/(\d+)\/$/);
+    const res = await this.sendApiRequest(`${path}/${match[1]}`, params);
+    return {
+      name: res?.name,
+      terrain: res?.terrain,
+      climate: res?.climate,
+      residents: res?.residents,
+    };
+  }
+
   async getPlanets(path: string, params: ParameterType): Promise<Planet> {
     return await this.sendApiRequest(path, params);
   }
 
   async getFilms(path: string, params: ParameterType): Promise<Film> {
     return await this.sendApiRequest(path, params);
+  }
+
+  async getRelativeFilm(
+    path: string,
+    films: any,
+    params: ParameterType
+  ): Promise<{ data: RelativeFilm[] }> {
+    try {
+      const data = await Promise.all(
+        films.map(async (each: any) => {
+          const match = each.match(/\/(\d+)\/$/);
+          const res = await this.sendApiRequest(`${path}/${match[1]}`, params);
+          return {
+            title: res?.title,
+            url: res?.url,
+          };
+        })
+      );
+      return { data };
+    } catch (error) {
+      return { data: [] };
+    }
   }
 
   async getVehicle(path: string, params: ParameterType): Promise<Vehicle> {
