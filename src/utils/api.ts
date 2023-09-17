@@ -8,7 +8,6 @@ import {
   Planet,
   RelativeFilm,
   RelativeHomeWorld,
-  ResultFilm,
   Species,
   StarShips,
   Vehicle,
@@ -55,6 +54,25 @@ export class FetchAPI {
 
   async getPeoples(path: string, params: ParameterType): Promise<People> {
     return await this.sendApiRequest(path, params);
+  }
+
+  async getRelativePeople(
+    path: string,
+    people: string[],
+    params: ParameterType
+  ): Promise<{ data: PeopleResult[] }> {
+    try {
+      const data = await Promise.all(
+        people.map(async (each: any) => {
+          const match = each.match(/\/(\d+)\/$/);
+          const res = match && (await this.sendApiRequest(`${path}/${match[1]}`, params));
+          return res;
+        })
+      );
+      return { data };
+    } catch (error) {
+      return { data: [] };
+    }
   }
 
   async getRelativeHomeworld(

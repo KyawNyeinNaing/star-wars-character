@@ -1,54 +1,76 @@
 'use client';
 import { Card } from '@/components/Card';
 import { Icons, Image } from '@/components/Image';
-import { Film, PeopleResult, RelativeFilm, RelativeHomeWorld } from '@/types';
-import { AspectRatio, Avatar, Box, Container, Flex, Grid } from '@radix-ui/themes';
+import {
+  Film,
+  FilmResult,
+  PeopleResult,
+  PlanetResult,
+  RelativeFilm,
+  RelativeHomeWorld,
+  SpeciesResult,
+} from '@/types';
+import { Box, Container, Grid } from '@radix-ui/themes';
 import { useTheme } from 'next-themes';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as Ariakit from '@ariakit/react';
 import useItemList from '@/hooks/useAtomReducer';
 import { TYPES } from '@/utils/enum';
-import { Modal, ModalDescription, ModalHeading, ModalTrigger } from '@/components/Modal';
+import { ModalTrigger } from '@/components/Modal';
 import { Text } from '@/components/Typography';
 import BigNumber from 'bignumber.js';
 import { FetchAPI, ParameterType } from '@/utils/api';
-import { delay } from '@/utils';
+import { delay, findByName } from '@/utils';
 import dayjs from 'dayjs';
 import CharacterDetailsModal from './components/CharacterDetailsModal';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import CharacterSearch from './components/CharacterSearch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select';
 
 interface Props {
   people: PeopleResult[];
+  planets: PlanetResult[];
+  species: SpeciesResult[];
+  films: FilmResult[];
   search?: string;
   page?: number;
 }
 
-const Home: React.FC<Props> = ({ people, search = '', page = 1 }: Props) => {
+const Home: React.FC<Props> = ({
+  people,
+  planets,
+  films,
+  species,
+  search = '',
+  page = 1,
+}: Props) => {
   const [selectedCharacter, setSelectedCharacter] = useState<PeopleResult & { key: number }>();
-  const [films, setFilms] = useState<{ data: RelativeFilm[] }>();
+  const [relativeFilms, setRelativeFilms] = useState<{ data: RelativeFilm[] }>();
   const [homeWorld, setHomeWorld] = useState<RelativeHomeWorld | undefined>();
   const { theme } = useTheme();
   const { itemList } = useItemList(TYPES.CHARACTER_LIST);
   const trigger = Ariakit.useDialogStore({ animated: true });
   const fetchApi = new FetchAPI();
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<string>();
+  const [filteredData, setFilteredData] = useState<any>();
+  const findSpecie = findByName(species, selectedValue);
 
-  const getFilms = useCallback(async () => {
+  const getRelativeFilms = useCallback(async () => {
     setLoading(true);
-    setFilms({ data: [] });
+    setRelativeFilms({ data: [] });
     delay(500);
     if (selectedCharacter) {
       const res = await fetchApi.getRelativeFilm('films', selectedCharacter?.films, {
         page: 1,
       });
-      setFilms(res);
+      setRelativeFilms(res);
     }
     setLoading(false);
   }, [selectedCharacter]);
 
-  const getHomeWorld = useCallback(async () => {
+  const getRelativeHomeWorld = useCallback(async () => {
     setHomeWorld(undefined);
     const res = await fetchApi.getRelativeHomeworld('planets', selectedCharacter?.homeworld, {
       page: 1,
@@ -56,13 +78,24 @@ const Home: React.FC<Props> = ({ people, search = '', page = 1 }: Props) => {
     setHomeWorld(res);
   }, [selectedCharacter]);
 
-  useEffect(() => {
-    getHomeWorld();
-  }, [getHomeWorld]);
+  const getRelativePeople = useCallback(async () => {
+    const res = await fetchApi.getRelativePeople('people', findSpecie?.people, {
+      page: 1,
+    });
+    setFilteredData(res);
+  }, [findSpecie]);
 
   useEffect(() => {
-    getFilms();
-  }, [getFilms]);
+    getRelativeHomeWorld();
+  }, [getRelativeHomeWorld]);
+
+  useEffect(() => {
+    getRelativeFilms();
+  }, [getRelativeFilms]);
+
+  useEffect(() => {
+    getRelativePeople();
+  }, [getRelativePeople]);
 
   useEffect(() => {
     itemList(people);
@@ -81,7 +114,53 @@ const Home: React.FC<Props> = ({ people, search = '', page = 1 }: Props) => {
         <Container size="4">
           <Box className="bg-[#20303d] space-y-[12px]" p="3">
             <div className="flex items-center justify-end gap-x-[10px]">
+              <Select
+                onValueChange={value => {
+                  setSelectedValue(value);
+                }}
+              >
+                <SelectTrigger className="h-8 w-[200px]">
+                  <SelectValue placeholder="Filter with Species..." />
+                </SelectTrigger>
+                <SelectContent side="top">
+                  {species?.map((each, key) => {
+                    return (
+                      <SelectItem key={key} value={each?.name}>
+                        {each?.name}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+
+              <Select>
+                <SelectTrigger className="h-8 w-[200px]">
+                  <SelectValue placeholder="Filter with Homeworld..." />
+                </SelectTrigger>
+                <SelectContent side="top">
+                  {planets?.map((each, key) => (
+                    <SelectItem key={key} value={each?.name}>
+                      {each?.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select>
+                <SelectTrigger className="h-8 w-[200px]">
+                  <SelectValue placeholder="Filter with Films..." />
+                </SelectTrigger>
+                <SelectContent side="top">
+                  {films?.map((each, key) => (
+                    <SelectItem key={key} value={each?.title}>
+                      {each?.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <CharacterSearch />
+
               <Link
                 href={{
                   pathname: '/',
@@ -147,7 +226,7 @@ const Home: React.FC<Props> = ({ people, search = '', page = 1 }: Props) => {
         trigger={trigger}
         selectedCharacter={selectedCharacter}
         homeWorld={homeWorld}
-        films={films}
+        films={relativeFilms}
         loading={loading}
       />
     </div>

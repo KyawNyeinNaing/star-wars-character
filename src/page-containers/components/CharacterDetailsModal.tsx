@@ -28,23 +28,23 @@ const CharacterDetailsModal: React.FC<Props> = ({
         <Flex justify="between">
           <Box>
             <div className="flex justify-start items-center">
-              <Text className="w-[130px]">Height</Text>
+              <Text className="w-[160px]">Height</Text>
               <Text className="text-[#ff802b]">: {selectedCharacter?.height}m</Text>
             </div>
             <div className="flex justify-start items-center">
-              <Text className="w-[130px]">Mass</Text>
+              <Text className="w-[160px]">Mass</Text>
               <Text className="text-[#ff802b]">: {selectedCharacter?.mass}kg</Text>
             </div>
             <div className="flex justify-start items-center">
-              <Text className="w-[130px]">Created date</Text>
+              <Text className="w-[160px]">Created date</Text>
               <Text className="text-[#ff802b]">: {selectedCharacter?.created}</Text>
             </div>
             <div className="flex justify-start items-center">
-              <Text className="w-[130px]">Date of birth</Text>
+              <Text className="w-[160px]">Date of birth</Text>
               <Text className="text-[#ff802b]">: {selectedCharacter?.birth_year}</Text>
             </div>
             <div className="flex justify-start items-center">
-              <Text className="w-[130px]">Number of films</Text>
+              <Text className="w-[160px]">Number of films</Text>
               <Text className="text-[#ff802b]">: {selectedCharacter?.films?.length}</Text>
             </div>
           </Box>
@@ -76,19 +76,19 @@ const CharacterDetailsModal: React.FC<Props> = ({
                 <div className="space-y-[10px]">
                   <Box>
                     <div className="flex justify-start items-center">
-                      <Text className="w-[130px]">Name</Text>
+                      <Text className="w-[160px]">Name</Text>
                       <Text className="text-[#ff802b]">: {homeWorld?.name}</Text>
                     </div>
                     <div className="flex justify-start items-center">
-                      <Text className="w-[130px]">Terrain</Text>
+                      <Text className="w-[160px]">Terrain</Text>
                       <Text className="text-[#ff802b]">: {homeWorld?.terrain}</Text>
                     </div>
                     <div className="flex justify-start items-center">
-                      <Text className="w-[130px]">Climate</Text>
+                      <Text className="w-[160px]">Climate</Text>
                       <Text className="text-[#ff802b]">: {homeWorld?.climate}</Text>
                     </div>
                     <div className="flex justify-start items-start">
-                      <Text className="w-[130px]">Number of residents</Text>
+                      <Text className="w-[160px]">Number of residents</Text>
                       <Text className="text-[#ff802b]">: {homeWorld?.residents?.length}</Text>
                     </div>
                   </Box>
