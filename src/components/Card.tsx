@@ -5,6 +5,8 @@ import { Image } from './Image';
 import { PeopleResult } from '@/types';
 import { Text } from './Typography';
 import styled from 'styled-components';
+import useItemList from '@/hooks/useAtomReducer';
+import { TYPES } from '@/utils/enum';
 
 interface Props {
   data: PeopleResult;
@@ -14,6 +16,8 @@ interface Props {
 
 export const Card = React.forwardRef<HTMLDivElement, Props>(
   ({ data, urlId = 0, className }: Props, ref) => {
+    const { items } = useItemList(TYPES.CHARACTER_LIST);
+
     return (
       <CardWrap ref={ref} className={cn('w-auto rounded-sm overflow-hidden', className)}>
         <Image

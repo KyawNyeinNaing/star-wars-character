@@ -16,10 +16,11 @@ export interface PlanetResult {
 }
 
 export interface RelativeHomeWorld {
-  name: string;
-  terrain: string;
-  climate: string;
-  residents: string[];
+  name?: string;
+  terrain?: string;
+  climate?: string;
+  residents?: string[];
+  status?: boolean;
 }
 
 export interface Planet {

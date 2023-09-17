@@ -14,7 +14,6 @@ import { TYPES } from '@/utils/enum';
 import { PeopleResult } from '@/types';
 
 const Header: React.FC = () => {
-  // const [search, setSearch] = useState<string | null>('');
   const [searchValue, setSearchValue] = useState<string>('');
   const router = useRouter();
   const comboboxRef = useRef<any>(null);

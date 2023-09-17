@@ -62,14 +62,21 @@ export class FetchAPI {
     homeworld: any,
     params: ParameterType
   ): Promise<RelativeHomeWorld> {
-    const match = homeworld.match(/\/(\d+)\/$/);
-    const res = await this.sendApiRequest(`${path}/${match[1]}`, params);
-    return {
-      name: res?.name,
-      terrain: res?.terrain,
-      climate: res?.climate,
-      residents: res?.residents,
-    };
+    try {
+      const match = homeworld?.match(/\/(\d+)\/$/);
+      if (!match) return { status: false };
+      const res = match && (await this.sendApiRequest(`${path}/${match[1]}`, params));
+      return {
+        name: res?.name,
+        terrain: res?.terrain,
+        climate: res?.climate,
+        residents: res?.residents,
+      };
+    } catch (error) {
+      return {
+        status: false,
+      };
+    }
   }
 
   async getPlanets(path: string, params: ParameterType): Promise<Planet> {
@@ -89,7 +96,7 @@ export class FetchAPI {
       const data = await Promise.all(
         films.map(async (each: any) => {
           const match = each.match(/\/(\d+)\/$/);
-          const res = await this.sendApiRequest(`${path}/${match[1]}`, params);
+          const res = match && (await this.sendApiRequest(`${path}/${match[1]}`, params));
           return {
             title: res?.title,
             url: res?.url,
