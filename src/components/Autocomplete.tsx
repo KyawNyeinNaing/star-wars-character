@@ -42,7 +42,7 @@ const Autocomplete = React.forwardRef<
         ref={ref}
         placeholder="Search by character name..."
         className={cn("combobox", className)}
-        showOnChange={onChange}
+        // showOnChange={onChange}
       />
       <Ariakit.ComboboxCancel className="button secondary combobox-cancel" />
       <Ariakit.ComboboxPopover gutter={4} sameWidth className="popover">

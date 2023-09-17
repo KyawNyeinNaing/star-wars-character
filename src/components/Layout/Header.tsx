@@ -17,17 +17,8 @@ const Header: React.FC = () => {
   // const [search, setSearch] = useState<string | null>('');
   const [searchValue, setSearchValue] = useState<string>('');
   const router = useRouter();
-  // const { get } = useSearchParams();
-  // const getParam = get('search');
   const comboboxRef = useRef<any>(null);
   const { items } = useItemList(TYPES.CHARACTER_LIST);
-
-  // useEffect(() => {
-  //   if (getParam) {
-  //     setSearchValue();
-  //   }
-  // }, [getParam]);
-
 
   useEffect(() => {
     if (!searchValue) {
@@ -41,7 +32,13 @@ const Header: React.FC = () => {
     setSearchValue(comboboxRef?.current?.value);
   }, 500);
 
-  const matches = useMemo(() => items && matchSorter(items?.peopleList as PeopleResult[], searchValue), [searchValue, items]);
+  const matches = useMemo(() => {
+    if (!searchValue) {
+      return items?.peopleList || [];
+    } else {
+      return items?.peopleList?.filter(each => each.name.includes(searchValue)) || [];
+    }
+  }, [searchValue, items?.peopleList]);
 
   return (
     <Container size="4">
@@ -63,12 +60,6 @@ const Header: React.FC = () => {
                 </Item>
               ))}
             </Autocomplete>
-            {/* <Autocomplete>
-              <Item>Hello</Item>
-              <Item>Hello</Item>
-              <Item>Hello</Item>
-            </Autocomplete> */}
-            {/* <Input search={search} onChange={event => debouncedOnChange(event)} /> */}
           </div>
         </div>
       </Grid>
