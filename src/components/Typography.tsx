@@ -8,6 +8,7 @@ interface Props {
   as?: 'p' | 'div' | 'span';
   size?: string;
   weight?: string;
+  color?: string;
 }
 
 export const Text = React.forwardRef<HTMLDivElement, Props>(

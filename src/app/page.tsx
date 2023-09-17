@@ -16,38 +16,7 @@ const HomePage = async ({ searchParams }: { searchParams: ParameterType }) => {
 
   return (
     <>
-      <Container size="4">
-        <div className="flex items-center justify-end gap-x-[10px]">
-          <Link
-            href={{
-              pathname: '/',
-              query: {
-                ...(search ? { search } : {}),
-                page: page > 1 ? page - 1 : 1,
-              },
-            }}
-            className={cn(
-              'rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800',
-              page <= 1 && 'pointer-events-none opacity-50'
-            )}
-          >
-            Previous
-          </Link>
-          <Link
-            href={{
-              pathname: '/',
-              query: {
-                ...(search ? { search } : {}),
-                page: page + 1,
-              },
-            }}
-            className="rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800"
-          >
-            Next
-          </Link>
-        </div>
-      </Container>
-      <Home people={people?.results} />
+      <Home people={people?.results} search={search} page={page} />
     </>
   );
 };

@@ -1,12 +1,4 @@
 'use client';
-import { Button } from '@/components/Button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/Dialog';
 import { Icons } from '@/components/Image';
 import { Modal, ModalDescription, ModalHeading } from '@/components/Modal';
 import { Text } from '@/components/Typography';

@@ -24,7 +24,7 @@ export class FetchAPI {
   apiDomain: string = 'swapi.dev'; // process.env.API_DOMAIN
   baseUrl: string;
   constructor() {
-    this.baseUrl = `https://${this.apiDomain}/`;
+    this.baseUrl = `https://${this.apiDomain}/api`;
   }
   async sendApiRequest(
     api: string,

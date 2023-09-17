@@ -1,26 +1,26 @@
-"use client";
-import "@/styles/combobox.css";
-import * as Ariakit from "@ariakit/react";
-import * as React from "react";
-import { cn } from "@/utils/cn";
+'use client';
+import '@/styles/combobox.css';
+import * as Ariakit from '@ariakit/react';
+import * as React from 'react';
+import { cn } from '@/utils/cn';
 
 const Item = React.forwardRef<
   HTMLDivElement,
   { className?: string; value: string; children: React.ReactNode }
->(({ className, value, children, ...props }, ref) =>
+>(({ className, value, children, ...props }, ref) => (
   <Ariakit.ComboboxItem
     ref={ref}
     value={value}
     className={cn(
-      "flex items-center gap-2 rounded outline-none scroll-m-2 p-2 hover:bg-[#99d6ff]",
+      'flex items-center gap-2 rounded outline-none scroll-m-2 p-2 hover:bg-[#99d6ff]',
       className
     )}
     {...props}
   >
     {children}
   </Ariakit.ComboboxItem>
-);
-Item.displayName = "Item";
+));
+Item.displayName = 'Item';
 
 const Autocomplete = React.forwardRef<
   HTMLInputElement,
@@ -30,7 +30,7 @@ const Autocomplete = React.forwardRef<
     onChange?: (arg?: any) => any;
     setValue: (arg?: any) => void;
   }
->(({ children, className, setValue, onChange }, ref) => {
+>(({ children, className, setValue }, ref) => {
   return (
     <Ariakit.ComboboxProvider
       animated
@@ -41,8 +41,7 @@ const Autocomplete = React.forwardRef<
       <Ariakit.Combobox
         ref={ref}
         placeholder="Search by character name..."
-        className={cn("combobox", className)}
-        // showOnChange={onChange}
+        className={cn('combobox', className)}
       />
       <Ariakit.ComboboxCancel className="button secondary combobox-cancel" />
       <Ariakit.ComboboxPopover gutter={4} sameWidth className="popover">
@@ -51,6 +50,6 @@ const Autocomplete = React.forwardRef<
     </Ariakit.ComboboxProvider>
   );
 });
-Autocomplete.displayName = "Autocomplete";
+Autocomplete.displayName = 'Autocomplete';
 
 export { Autocomplete, Item };
