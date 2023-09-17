@@ -36,7 +36,7 @@ const Home: React.FC<Props> = ({ people }: Props) => {
     delay(500);
     if (selectedCharacter) {
       const res = await fetchApi.getRelativeFilm('films', selectedCharacter?.films, {
-        page: '1',
+        page: 1,
       });
       setFilms(res);
     }
@@ -46,7 +46,7 @@ const Home: React.FC<Props> = ({ people }: Props) => {
   const getHomeWorld = useCallback(async () => {
     setHomeWorld(undefined);
     const res = await fetchApi.getRelativeHomeworld('planets', selectedCharacter?.homeworld, {
-      page: '1',
+      page: 1,
     });
     setHomeWorld(res);
   }, [selectedCharacter]);

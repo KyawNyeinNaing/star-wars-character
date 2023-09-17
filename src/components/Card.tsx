@@ -16,15 +16,13 @@ interface Props {
 
 export const Card = React.forwardRef<HTMLDivElement, Props>(
   ({ data, urlId = 0, className }: Props, ref) => {
-    const { items } = useItemList(TYPES.CHARACTER_LIST);
-
     return (
       <CardWrap ref={ref} className={cn('w-auto rounded-sm overflow-hidden', className)}>
         <Image
           src={`https://starwars-visualguide.com/assets/img/characters/${urlId + 1}.jpg`}
           width={400}
           height={550}
-          alt="test"
+          alt="character image"
         />
         <div className="px-[20px] py-[35px] relative bg-[#1a1a1a]">
           <CardDecalRight className="absolute right-[20px] top-0 w-[12px] h-[8px]" />

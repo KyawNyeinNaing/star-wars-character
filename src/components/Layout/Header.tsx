@@ -12,6 +12,7 @@ import { matchSorter } from 'match-sorter';
 import useItemList from '@/hooks/useAtomReducer';
 import { TYPES } from '@/utils/enum';
 import { PeopleResult } from '@/types';
+import Link from 'next/link';
 
 const Header: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');

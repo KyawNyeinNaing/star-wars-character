@@ -17,15 +17,14 @@ import {
 export interface ParameterType {
   search?: string | string[] | undefined;
   format?: string;
-  page: string;
-  [key: string]: string | string[] | undefined;
+  page?: number;
 }
 
 export class FetchAPI {
   apiDomain: string = 'swapi.dev'; // process.env.API_DOMAIN
   baseUrl: string;
   constructor() {
-    this.baseUrl = `https://${this.apiDomain}/api`;
+    this.baseUrl = `https://${this.apiDomain}/`;
   }
   async sendApiRequest(
     api: string,
@@ -48,6 +47,7 @@ export class FetchAPI {
         };
       })
       .catch((error: Error) => {
+        console.log('error -> ', error);
         console.log('ERROR ==>', JSON.stringify(error));
         throw new Error(error?.message);
       });
