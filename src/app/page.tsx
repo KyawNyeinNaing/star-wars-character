@@ -1,8 +1,6 @@
 import Home from '@/page-containers/Home';
-import { peopleAtom } from '@/shared/atom';
 import { People } from '@/types';
 import { FetchAPI, ParameterType } from '@/utils/api';
-import { useHydrateAtoms } from 'jotai/utils';
 
 const HomePage = async ({ searchParams }: { searchParams: ParameterType }) => {
   const search = typeof searchParams.search === 'string' ? searchParams.search : '';

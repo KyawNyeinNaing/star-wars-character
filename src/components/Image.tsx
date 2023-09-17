@@ -1,6 +1,6 @@
 import { IconType } from '@/utils/enum';
 import NextImage from 'next/image';
-import { RxMagnifyingGlass } from 'react-icons/rx';
+import { RxMagnifyingGlass, RxCross2 } from 'react-icons/rx';
 
 export const Icons = {
   star: ({ type, ...props }: { type: IconType }) => {
@@ -39,6 +39,7 @@ export const Icons = {
     }
   },
   search: RxMagnifyingGlass,
+  cross: RxCross2,
 };
 
 interface Image {
