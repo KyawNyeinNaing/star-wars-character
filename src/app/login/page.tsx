@@ -1,16 +1,11 @@
 'use client';
-
 import Link from 'next/link';
-import { cn } from '@/utils/cn';
-import { buttonVariants } from '@/components/Button';
-// import { LoginForm } from "./components/loginForm";
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { setLocalStorage, setToken } from '@/shared/authServices';
+import { setToken } from '@/shared/authServices';
 import InputText from '@/components/Input';
 
-export const LoginPage = () => {
+const LoginPage = () => {
   const router = useRouter();
   const {
     register,
@@ -34,7 +29,7 @@ export const LoginPage = () => {
       }).then(res => res.json());
       const token = res?.token;
       if (token) {
-        setToken(token)
+        setToken(token);
         router.push('/');
       }
     } catch (error) {
@@ -137,4 +132,5 @@ export const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;
