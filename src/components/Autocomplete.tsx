@@ -1,8 +1,10 @@
 'use client';
-import '@/styles/combobox.css';
-import * as Ariakit from '@ariakit/react';
 import * as React from 'react';
+
 import { cn } from '@/utils/cn';
+import * as Ariakit from '@ariakit/react';
+
+import '@/styles/combobox.css';
 
 const Item = React.forwardRef<
   HTMLDivElement,

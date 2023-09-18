@@ -1,7 +1,8 @@
-import { COOKIE_NAME, JWT_SECRET } from '@/configs/constants';
+import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
 import { sign } from 'jsonwebtoken';
-import { NextResponse } from 'next/server';
+
+import { COOKIE_NAME, JWT_SECRET } from '@/configs/constants';
 
 const MAX_AGE = 60 * 60 * 24 * 30; // days;
 

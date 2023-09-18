@@ -1,7 +1,8 @@
-import { IconType } from '@/utils/enum';
 import NextImage from 'next/image';
-import { RxMagnifyingGlass, RxCross2 } from 'react-icons/rx';
-import { PiFilmSlate, PiPlanetThin, PiCaretDownThin, PiCheckThin } from 'react-icons/pi';
+import { PiCaretDownThin, PiCheckThin, PiFilmSlate, PiPlanetThin } from 'react-icons/pi';
+import { RxCross2, RxMagnifyingGlass } from 'react-icons/rx';
+
+import { IconType } from '@/utils/enum';
 
 export const Icons = {
   star: ({ type, ...props }: { type: IconType }) => {

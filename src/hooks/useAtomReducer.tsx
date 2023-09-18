@@ -1,6 +1,7 @@
-import { PeopleResult } from "@/types";
-import { TYPES } from "@/utils/enum";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom } from 'jotai';
+
+import { PeopleResult } from '@/types';
+import { TYPES } from '@/utils/enum';
 
 interface State {
   peopleList: PeopleResult[] | null;
@@ -12,7 +13,7 @@ interface Action {
 }
 
 const initialState: State = {
-  peopleList: []
+  peopleList: [],
 };
 
 const reducer = (state: State, action: Action) => {
@@ -20,7 +21,7 @@ const reducer = (state: State, action: Action) => {
     case TYPES.CHARACTER_LIST:
       return {
         ...state,
-        peopleList: action.payload
+        peopleList: action.payload,
       };
 
     default:
@@ -38,13 +39,13 @@ const useItemList = (type: TYPES) => {
   const itemList = (payload: any) => {
     dispatch({
       type,
-      payload
+      payload,
     });
   };
 
   return {
     items,
-    itemList
+    itemList,
   };
 };
 

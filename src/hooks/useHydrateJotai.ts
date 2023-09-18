@@ -1,6 +1,7 @@
 'use client';
-import { searchAtom } from '@/shared/atom';
 import { useAtom } from 'jotai';
+
+import { searchAtom } from '@/shared/atom';
 
 export function useHydrateJotai() {
   const [, setSearch] = useAtom(searchAtom);

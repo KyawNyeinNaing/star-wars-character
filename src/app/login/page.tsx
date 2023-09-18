@@ -2,8 +2,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { setToken } from '@/shared/authServices';
+
 import InputText from '@/components/Input';
+import { setToken } from '@/shared/authServices';
 
 const LoginPage = () => {
   const router = useRouter();

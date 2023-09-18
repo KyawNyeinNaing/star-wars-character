@@ -1,10 +1,12 @@
 'use client';
-import { Container, Grid } from '@radix-ui/themes';
 import React from 'react';
-import { Image } from '../Image';
 import Link from 'next/link';
+
 import { cn } from '@/utils/cn';
+import { Container, Grid } from '@radix-ui/themes';
+
 import { buttonVariants } from '../Button';
+import { Image } from '../Image';
 
 const Header: React.FC = () => {
   return (

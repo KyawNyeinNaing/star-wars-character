@@ -1,9 +1,9 @@
 'use client';
 import * as React from 'react';
-import { CheckIcon } from '@radix-ui/react-icons';
-import * as SelectPrimitive from '@radix-ui/react-select';
 
 import { cn } from '@/utils/cn';
+import * as SelectPrimitive from '@radix-ui/react-select';
+
 import { Icons } from './Image';
 
 const Select = SelectPrimitive.Root;
@@ -110,11 +110,11 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
   Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
   SelectContent,
-  SelectLabel,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectSeparator,
+  SelectTrigger,
+  SelectValue,
 };

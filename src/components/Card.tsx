@@ -1,12 +1,11 @@
 import * as React from 'react';
-
-import { cn } from '@/utils/cn';
-import { Image } from './Image';
-import { PeopleResult } from '@/types';
-import { Text } from './Typography';
 import styled from 'styled-components';
-import useItemList from '@/hooks/useAtomReducer';
-import { TYPES } from '@/utils/enum';
+
+import { PeopleResult } from '@/types';
+import { cn } from '@/utils/cn';
+
+import { Image } from './Image';
+import { Text } from './Typography';
 
 interface Props {
   data: PeopleResult;

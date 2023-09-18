@@ -1,10 +1,11 @@
 'use client';
+import React from 'react';
+
 import { Icons } from '@/components/Image';
 import { Modal, ModalDescription, ModalHeading } from '@/components/Modal';
 import { Text } from '@/components/Typography';
 import { PeopleResult, RelativeFilm, RelativeHomeWorld } from '@/types';
 import { Avatar, Box, Flex } from '@radix-ui/themes';
-import React from 'react';
 
 interface Props {
   trigger?: any;

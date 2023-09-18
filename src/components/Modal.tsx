@@ -1,8 +1,11 @@
 import * as React from 'react';
-import * as Ariakit from '@ariakit/react';
-import '@/styles/modal.css';
+
 import { cn } from '@/utils/cn';
+import * as Ariakit from '@ariakit/react';
+
 import { Icons } from './Image';
+
+import '@/styles/modal.css';
 
 const ModalTrigger = React.forwardRef<
   HTMLButtonElement,
@@ -64,4 +67,4 @@ const Modal = React.forwardRef<
 });
 Modal.displayName = 'Modal';
 
-export { Modal, ModalTrigger, ModalHeading, ModalDescription };
+export { Modal, ModalDescription, ModalHeading, ModalTrigger };

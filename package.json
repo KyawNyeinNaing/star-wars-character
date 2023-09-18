@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "code-style": "yarn eslint --ext ts,tsx .",
+    "code-style-fix": "yarn eslint --fix  --ext ts,tsx .",
+    "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+    }
   },
   "dependencies": {
     "@ariakit/react": "^0.3.2",
@@ -26,15 +33,23 @@
     "dayjs": "^1.11.9",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jest": "^27.4.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-spellcheck": "^0.0.20",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "jotai": "^2.4.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "lint-staged": "^14.0.1",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
     "next": "13.4.19",
     "next-cookies": "^2.0.3",
     "next-themes": "^0.2.1",
     "postcss": "8.4.29",
+    "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.1",

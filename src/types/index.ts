@@ -1,9 +1,9 @@
 export * from './Film';
 export * from './People';
+export * from './Planet';
 export * from './Species';
 export * from './StarShips';
 export * from './Vehicle';
-export * from './Planet';
 
 export interface ApiResponse {
   count: number;

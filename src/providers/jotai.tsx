@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Provider, createStore } from 'jotai';
+import { createStore, Provider } from 'jotai';
 
 const store = createStore();
 

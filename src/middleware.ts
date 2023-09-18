@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const getUserStatus = (token: string) => {
@@ -19,7 +18,7 @@ const getRequiredStatus = (pathname: string) => {
 
 export const middleware = (req: NextRequest) => {
   const { pathname } = req.nextUrl;
-  const getAll = req.cookies.getAll()
+  const getAll = req.cookies.getAll();
   const token = getAll[0]?.value;
   const userStatus = getUserStatus(token);
   const requiredStatus = getRequiredStatus(pathname);

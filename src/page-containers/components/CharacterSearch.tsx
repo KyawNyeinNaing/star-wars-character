@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { debounce } from 'lodash';
+
 import { Autocomplete, Item } from '@/components/Autocomplete';
 import useItemList from '@/hooks/useAtomReducer';
 import { TYPES } from '@/utils/enum';

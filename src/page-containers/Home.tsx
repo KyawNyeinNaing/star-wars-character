@@ -1,8 +1,16 @@
 'use client';
+import React, { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useTheme } from 'next-themes';
+import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
+
 import { Card } from '@/components/Card';
 import { Icons, Image } from '@/components/Image';
+import { ModalTrigger } from '@/components/Modal';
+import useItemList from '@/hooks/useAtomReducer';
+import { getToken } from '@/shared/authServices';
 import {
-  Film,
   FilmResult,
   PeopleResult,
   PlanetResult,
@@ -10,25 +18,16 @@ import {
   RelativeHomeWorld,
   SpeciesResult,
 } from '@/types';
-import { Box, Container, Grid } from '@radix-ui/themes';
-import { useTheme } from 'next-themes';
-import React, { useCallback, useEffect, useState } from 'react';
-import * as Ariakit from '@ariakit/react';
-import useItemList from '@/hooks/useAtomReducer';
-import { TYPES } from '@/utils/enum';
-import { ModalTrigger } from '@/components/Modal';
-import { Text } from '@/components/Typography';
-import BigNumber from 'bignumber.js';
-import { FetchAPI, ParameterType } from '@/utils/api';
 import { delay, findByName } from '@/utils';
-import dayjs from 'dayjs';
-import CharacterDetailsModal from './components/CharacterDetailsModal';
-import Link from 'next/link';
+import { FetchAPI } from '@/utils/api';
 import { cn } from '@/utils/cn';
-import CharacterSearch from './components/CharacterSearch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select';
+import { TYPES } from '@/utils/enum';
+import * as Ariakit from '@ariakit/react';
+import { Box, Container, Grid } from '@radix-ui/themes';
+
+import CharacterDetailsModal from './components/CharacterDetailsModal';
 import CharacterFilter from './components/CharacterFilter';
-import { getToken } from '@/shared/authServices';
+import CharacterSearch from './components/CharacterSearch';
 
 interface Props {
   people: PeopleResult[];
@@ -65,9 +64,9 @@ const Home: React.FC<Props> = ({
   const trigger = Ariakit.useDialogStore({ animated: true });
   const fetchApi = new FetchAPI();
 
-  const token = getToken()
+  const token = getToken();
 
-  console.log('token -> ', token)
+  console.log('token -> ', token);
 
   // find by name
   const findWithSpecie = findByName(species, selectedValue);
