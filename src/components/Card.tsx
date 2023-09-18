@@ -18,12 +18,14 @@ export const Card = React.forwardRef<HTMLDivElement, Props>(
   ({ data, urlId = 0, className }: Props, ref) => {
     return (
       <CardWrap ref={ref} className={cn('w-auto rounded-sm overflow-hidden', className)}>
-        <Image
-          src={`https://starwars-visualguide.com/assets/img/characters/${urlId + 1}.jpg`}
-          width={400}
-          height={550}
-          alt="character image"
-        />
+        <div className="image-wrap">
+          <Image
+            src={`https://starwars-visualguide.com/assets/img/characters/${urlId + 1}.jpg`}
+            width={400}
+            height={550}
+            alt="character image"
+          />
+        </div>
         <div className="px-[20px] py-[35px] relative bg-[#1a1a1a]">
           <CardDecalRight className="absolute right-[20px] top-0 w-[12px] h-[8px]" />
           <CardDecalLeft className="absolute top-[20px] w-[24px] z-10 left" />
@@ -40,6 +42,11 @@ export const Card = React.forwardRef<HTMLDivElement, Props>(
 Card.displayName = 'Card';
 
 const CardWrap = styled.div`
+  & .image-wrap {
+    img {
+      transition: transform 0.3s ease;
+    }
+  }
   &:hover {
     & .left {
       &:before,
@@ -47,6 +54,12 @@ const CardWrap = styled.div`
         border-top-color: #fff;
         border-bottom-color: #fff;
         box-shadow: 0 0 6px 2px;
+      }
+    }
+    & .image-wrap {
+      img {
+        transform: scale(1.05);
+        filter: grayscale(1);
       }
     }
   }
@@ -68,7 +81,7 @@ const CardDecalLeft = styled.div`
   }
   &:after {
     width: 4px;
-    left: 20px;
+    left: 30px;
   }
 `;
 
