@@ -47,21 +47,29 @@ const Home: React.FC<Props> = ({
   page = 1,
 }: Props) => {
   const [selectedCharacter, setSelectedCharacter] = useState<PeopleResult & { key: number }>();
+  /*
+   * -------------------------------------------------------
+   *                         States
+   * -------------------------------------------------------
+   */
   const [relativeFilms, setRelativeFilms] = useState<{ data: RelativeFilm[] }>();
   const [homeWorld, setHomeWorld] = useState<RelativeHomeWorld | undefined>();
-  const { theme } = useTheme();
-  const { itemList } = useItemList(TYPES.CHARACTER_LIST);
-  const trigger = Ariakit.useDialogStore({ animated: true });
-  const fetchApi = new FetchAPI();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>();
   const [filteredData, setFilteredData] = useState<any>();
   const [getPeopleData, setGetPeopleData] = useState<PeopleResult[]>();
 
+  const { theme } = useTheme();
+  const { itemList } = useItemList(TYPES.CHARACTER_LIST);
+  const trigger = Ariakit.useDialogStore({ animated: true });
+  const fetchApi = new FetchAPI();
+
+  // find by name
   const findWithSpecie = findByName(species, selectedValue);
   const findWithHomeWorld = findByName(planets, selectedValue);
   const findWithFlims = findByName(films, selectedValue);
 
+  // get relative film of each character
   const getRelativeFilms = useCallback(async () => {
     setLoading(true);
     setRelativeFilms({ data: [] });
@@ -75,6 +83,12 @@ const Home: React.FC<Props> = ({
     setLoading(false);
   }, [selectedCharacter]);
 
+  /*
+   * -------------------------------------------------------
+   *                         Callback functions
+   * -------------------------------------------------------
+   */
+  // get relative homeworld of each character
   const getRelativeHomeWorld = useCallback(async () => {
     setHomeWorld(undefined);
     const res = await fetchApi.getRelativeHomeworld('planets', selectedCharacter?.homeworld, {
@@ -83,6 +97,7 @@ const Home: React.FC<Props> = ({
     setHomeWorld(res);
   }, [selectedCharacter]);
 
+  // filter by species
   const getRelativePeopleBySpecies = useCallback(async () => {
     setLoading(true);
     delay(500);
@@ -95,6 +110,7 @@ const Home: React.FC<Props> = ({
     setLoading(false);
   }, [findWithSpecie]);
 
+  // filter by homeworld
   const getRelativePeopleByHomeWorld = useCallback(async () => {
     setLoading(true);
     delay(500);
@@ -107,6 +123,7 @@ const Home: React.FC<Props> = ({
     setLoading(false);
   }, [findWithHomeWorld]);
 
+  // filter by films
   const getRelativePeopleByFilms = useCallback(async () => {
     setLoading(true);
     delay(500);
@@ -119,8 +136,11 @@ const Home: React.FC<Props> = ({
     setLoading(false);
   }, [findWithFlims]);
 
-  console.log('loading -> ', loading);
-
+  /*
+   * -------------------------------------------------------
+   *                         Effects
+   * -------------------------------------------------------
+   */
   useEffect(() => {
     getRelativeHomeWorld();
   }, [getRelativeHomeWorld]);
