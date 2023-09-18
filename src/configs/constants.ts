@@ -1,0 +1,3 @@
+export const COOKIE_NAME = 'JWT_STARWARCHARACTER';
+
+export const JWT_SECRET = 'JWT_SECRET';
