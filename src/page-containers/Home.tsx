@@ -27,6 +27,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import CharacterSearch from './components/CharacterSearch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select';
+import CharacterFilter from './components/CharacterFilter';
 
 interface Props {
   people: PeopleResult[];
@@ -55,7 +56,11 @@ const Home: React.FC<Props> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>();
   const [filteredData, setFilteredData] = useState<any>();
-  const findSpecie = findByName(species, selectedValue);
+  const [getPeopleData, setGetPeopleData] = useState<PeopleResult[]>();
+
+  const findWithSpecie = findByName(species, selectedValue);
+  const findWithHomeWorld = findByName(planets, selectedValue);
+  const findWithFlims = findByName(films, selectedValue);
 
   const getRelativeFilms = useCallback(async () => {
     setLoading(true);
@@ -78,12 +83,43 @@ const Home: React.FC<Props> = ({
     setHomeWorld(res);
   }, [selectedCharacter]);
 
-  const getRelativePeople = useCallback(async () => {
-    const res = await fetchApi.getRelativePeople('people', findSpecie?.people, {
-      page: 1,
-    });
-    setFilteredData(res);
-  }, [findSpecie]);
+  const getRelativePeopleBySpecies = useCallback(async () => {
+    setLoading(true);
+    delay(500);
+    if (findWithSpecie) {
+      const res = await fetchApi.getRelativePeople('people', findWithSpecie?.people, {
+        page: 1,
+      });
+      setFilteredData(res);
+    }
+    setLoading(false);
+  }, [findWithSpecie]);
+
+  const getRelativePeopleByHomeWorld = useCallback(async () => {
+    setLoading(true);
+    delay(500);
+    if (findWithHomeWorld) {
+      const res = await fetchApi.getRelativePeople('people', findWithHomeWorld?.residents, {
+        page: 1,
+      });
+      setFilteredData(res);
+    }
+    setLoading(false);
+  }, [findWithHomeWorld]);
+
+  const getRelativePeopleByFilms = useCallback(async () => {
+    setLoading(true);
+    delay(500);
+    if (findWithFlims) {
+      const res = await fetchApi.getRelativePeople('people', findWithFlims?.characters, {
+        page: 1,
+      });
+      setFilteredData(res);
+    }
+    setLoading(false);
+  }, [findWithFlims]);
+
+  console.log('loading -> ', loading);
 
   useEffect(() => {
     getRelativeHomeWorld();
@@ -94,12 +130,22 @@ const Home: React.FC<Props> = ({
   }, [getRelativeFilms]);
 
   useEffect(() => {
-    getRelativePeople();
-  }, [getRelativePeople]);
+    getRelativePeopleBySpecies();
+    getRelativePeopleByHomeWorld();
+    getRelativePeopleByFilms();
+  }, [getRelativePeopleBySpecies, getRelativePeopleByHomeWorld, getRelativePeopleByFilms]);
 
   useEffect(() => {
     itemList(people);
   }, [people]);
+
+  useEffect(() => {
+    if (filteredData?.data?.length) {
+      setGetPeopleData(filteredData?.data);
+    } else {
+      setGetPeopleData(people);
+    }
+  }, [people, filteredData?.data]);
 
   return (
     <div>
@@ -114,84 +160,56 @@ const Home: React.FC<Props> = ({
         <Container size="4">
           <Box className="bg-[#20303d] space-y-[12px]" p="3">
             <div className="flex items-center justify-end gap-x-[10px]">
-              <Select
-                onValueChange={value => {
-                  setSelectedValue(value);
-                }}
-              >
-                <SelectTrigger className="h-8 w-[200px]">
-                  <SelectValue placeholder="Filter with Species..." />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {species?.map((each, key) => {
-                    return (
-                      <SelectItem key={key} value={each?.name}>
-                        {each?.name}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-
-              <Select>
-                <SelectTrigger className="h-8 w-[200px]">
-                  <SelectValue placeholder="Filter with Homeworld..." />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {planets?.map((each, key) => (
-                    <SelectItem key={key} value={each?.name}>
-                      {each?.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select>
-                <SelectTrigger className="h-8 w-[200px]">
-                  <SelectValue placeholder="Filter with Films..." />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {films?.map((each, key) => (
-                    <SelectItem key={key} value={each?.title}>
-                      {each?.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <CharacterFilter
+                filterData={species}
+                selectedValue={setSelectedValue}
+                placeholder="Filter with species..."
+              />
+              <CharacterFilter
+                filterData={planets}
+                selectedValue={setSelectedValue}
+                placeholder="Filter with homeworld..."
+              />
+              <CharacterFilter
+                filterData={films}
+                selectedValue={setSelectedValue}
+                placeholder="Filter with films..."
+              />
 
               <CharacterSearch />
-
-              <Link
-                href={{
-                  pathname: '/',
-                  query: {
-                    ...(search ? { search } : {}),
-                    page: page > 1 ? page - 1 : 1,
-                  },
-                }}
-                className={cn(
-                  'rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800',
-                  page <= 1 && 'pointer-events-none opacity-50'
-                )}
-              >
-                Previous
-              </Link>
-              <Link
-                href={{
-                  pathname: '/',
-                  query: {
-                    ...(search ? { search } : {}),
-                    page: page + 1,
-                  },
-                }}
-                className="rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800"
-              >
-                Next
-              </Link>
+              <div className="flex items-center gap-x-[10px]">
+                <Link
+                  href={{
+                    pathname: '/',
+                    query: {
+                      ...(search ? { search } : {}),
+                      page: page > 1 ? page - 1 : 1,
+                    },
+                  }}
+                  className={cn(
+                    'rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800',
+                    page <= 1 && 'pointer-events-none opacity-50'
+                  )}
+                >
+                  Previous
+                </Link>
+                <Link
+                  href={{
+                    pathname: '/',
+                    query: {
+                      ...(search ? { search } : {}),
+                      page: page + 1,
+                    },
+                  }}
+                  className="rounded border bg-gray-100 px-3 py-1 text-sm text-gray-800"
+                >
+                  Next
+                </Link>
+              </div>
             </div>
-            <Grid columns="4" gap="4">
-              {people?.length ? (
-                people?.map((each, key) => {
+            {getPeopleData?.length ? (
+              <Grid columns="4" gap="4">
+                {getPeopleData?.map((each, key) => {
                   return (
                     <Box key={key}>
                       <ModalTrigger
@@ -209,15 +227,13 @@ const Home: React.FC<Props> = ({
                       </ModalTrigger>
                     </Box>
                   );
-                })
-              ) : (
-                <Box className="h-[300px]">
-                  <Text color="crimson" size="4">
-                    No data found!
-                  </Text>
-                </Box>
-              )}
-            </Grid>
+                })}
+              </Grid>
+            ) : (
+              <Box className="h-[300px] flex justify-center items-center w-full">
+                <Icons.loading />
+              </Box>
+            )}
           </Box>
         </Container>
       </div>
