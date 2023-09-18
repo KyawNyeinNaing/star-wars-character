@@ -34,6 +34,7 @@ export const LoginPage = () => {
       }).then(res => res.json());
       const token = res?.token;
       if (token) {
+        setToken(token)
         router.push('/');
       }
     } catch (error) {

@@ -28,6 +28,7 @@ import { cn } from '@/utils/cn';
 import CharacterSearch from './components/CharacterSearch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select';
 import CharacterFilter from './components/CharacterFilter';
+import { getToken } from '@/shared/authServices';
 
 interface Props {
   people: PeopleResult[];
@@ -63,6 +64,10 @@ const Home: React.FC<Props> = ({
   const { itemList } = useItemList(TYPES.CHARACTER_LIST);
   const trigger = Ariakit.useDialogStore({ animated: true });
   const fetchApi = new FetchAPI();
+
+  const token = getToken()
+
+  console.log('token -> ', token)
 
   // find by name
   const findWithSpecie = findByName(species, selectedValue);
